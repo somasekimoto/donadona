@@ -1,0 +1,7 @@
+{
+  "name": "contracts",
+  "version": "1.0.0",
+  "description": "donadona contracts",
+  "main": "index.js",
+  "license": "MIT"
+}
