@@ -8,6 +8,6 @@ contract TestJpyc is ERC20, Ownable {
     constructor() ERC20("TestJpyc", "TJPYC") {}
 
     function mint(address to, uint256 amount) public onlyOwner {
-        _mint(to, amount);
+        _mint(to, amount * 10 ** 18);
     }
 }
