@@ -3,5 +3,8 @@
   "version": "1.0.0",
   "description": "donadona contracts",
   "main": "index.js",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "hardhat": "^2.17.4"
+  }
 }
