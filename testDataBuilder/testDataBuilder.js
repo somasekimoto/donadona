@@ -65,7 +65,7 @@ const createRedistributionAddressDummyData = (payees, projects) => {
       return {
         id: ulid(),
         projectId: project.id,
-        payeeUserId: getPayeeIndex(payees, project.payeeId),
+        payeeId: getPayeeIndex(payees, project.payeeId),
       }
     })
   })
