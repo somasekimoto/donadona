@@ -11,6 +11,11 @@ class DefaultLayout extends StatelessWidget {
             appBar: AppBar(
               backgroundColor: Theme.of(context).colorScheme.inversePrimary,
               title: Text(title),
+              leading: BackButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                }
+              )
             ),
             body: body// This trailing comma makes auto-formatting nicer for build methods.
           );

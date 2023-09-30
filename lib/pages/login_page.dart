@@ -1,4 +1,5 @@
 import 'package:donadona/api/login_api.dart';
+import 'package:donadona/common/project_list_arguments.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -29,29 +30,35 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Center(
       child: Form(
-        child: Column(
+        key: _formKey,
+        child: ListView(
           children: [
-            TextFormField(
-              controller: _controller,
-              decoration: const InputDecoration(
-                labelText: 'ログインId',
-                hintText: 'ログインId',
-              ),
-              autovalidateMode: AutovalidateMode.onUserInteraction,
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'ログインIdを入力してください';
-                }
-                return null;
-              },
-              onSaved: (value) => {
-                if(value != null) {
-                  publicAddress = value
-                }
-              },
-            ),
+            SizedBox(height: MediaQuery.of(context).size.width * 0.45),
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16.0),
+              padding: const EdgeInsets.symmetric(horizontal: 24.0),
+              child: TextFormField(
+                  controller: _controller,
+                  decoration: const InputDecoration(
+                    labelText: 'パブリックアドレス',
+                    hintText: '0xXXXXXXXXXXXXXXXXXXXXXXXX',
+                  ),
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'パブリックアドレスを入力してください';
+                    }
+                    return null;
+                  },
+                  onSaved: (value) => {
+                    if(value != null) {
+                      publicAddress = value
+                    }
+                  },
+                ),
+              ),
+            SizedBox(height: MediaQuery.of(context).size.width * 0.45),
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: MediaQuery.of(context).size.width * 0.2),
               child: ElevatedButton(
                 onPressed: () async {
                   var flg = false;
@@ -61,8 +68,12 @@ class _LoginPageState extends State<LoginPage> {
                     flg = await LoginApi.certifyLogin(publicAddress);
                   }
                   if(!mounted) return;
-                  if(flg) Navigator.pushNamed(context, '/project/search');
+                  if(flg) Navigator.pushNamed(context, '/project/search', arguments: ProjectListArguments(publicAddress) );
                 },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFF89a8f9),
+                  foregroundColor: const Color(0xFFFFFFFF),
+                  ),
                 child: const Text('ログイン'),
               ),
             ),
