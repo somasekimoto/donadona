@@ -8,4 +8,8 @@ class Project {
   final int studyTime;
 
   Project(this.id, this.payeeId, this.projectName, this.overview, this.imagePath, this.targetMoney, this.studyTime);
+
+  static Project fromJson(Map<String, dynamic> json) {
+    return Project(json['id'], json['payeeId'], json['projectName'], json['overview'], json['imagePath'], json['targetMoney'], json['studyTime']);
+  }
 }
