@@ -15,7 +15,14 @@ class DefaultLayout extends StatelessWidget {
                 onPressed: () {
                   Navigator.of(context).pop();
                 }
-              )
+              ),
+              actions: [
+                IconButton(
+                  icon: const Icon(Icons.add),
+                  onPressed: () { 
+                    Navigator.pushNamed(context, '/project/edit');
+                  })
+              ]
             ),
             body: body// This trailing comma makes auto-formatting nicer for build methods.
           );
