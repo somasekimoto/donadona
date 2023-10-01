@@ -58,10 +58,13 @@ class _ProjectListPageState extends State<ProjectListPage> {
                       controller: _controller,
                       keyboardType: TextInputType.number,
                       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                         labelText: '勉強時間',
                         hintText: '6',
                         suffix: Text('時間'),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
                       ),
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       validator: (value) {
