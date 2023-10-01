@@ -1,18 +1,15 @@
-import 'package:donadona/api/login_api.dart';
-import 'package:donadona/common/project_list_arguments.dart';
-import 'package:donadona/store.dart';
+import 'package:donadona/common/withdraw_confirmationi_arguments.dart';
 import 'package:flutter/material.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({ super.key });
+class WithdrawPage extends StatefulWidget {
+  const WithdrawPage({ super.key });
   
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<WithdrawPage> createState() => _WithdrawPageState();
 }
-
-class _LoginPageState extends State<LoginPage> {
+class _WithdrawPageState extends State<WithdrawPage> {
   late TextEditingController _controller;
-  String publicAddress = '';
+  double withdrawAmount = 0;
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -34,55 +31,51 @@ class _LoginPageState extends State<LoginPage> {
         key: _formKey,
         child: ListView(
           children: [
-            SizedBox(height: MediaQuery.of(context).size.width * 0.5),
+            SizedBox(height: MediaQuery.of(context).size.width * 0.45),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24.0),
               child: TextFormField(
                   controller: _controller,
                   decoration: InputDecoration(
-                    labelText: 'パブリックアドレス',
-                    hintText: '0xXXXXXXXXXXXXXXXXXXXXXXXX',
+                    labelText: 'お引出し額',
+                    hintText: '100000',
+                    suffix: Text('JPYC'),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(30),
                     ),
                   ),
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  autovalidateMode: AutovalidateMode.always,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'パブリックアドレスを入力してください';
+                      return 'お引出し額を入力してください';
+                    }
+                    if(value != null && double.tryParse(value) == null) {
+                      return 'お引出し額には数値のみが有効です';
                     }
                     return null;
                   },
                   onSaved: (value) => {
                     if(value != null) {
-                      publicAddress = value
+                      withdrawAmount = double.parse(value)
                     }
                   },
                 ),
               ),
-            SizedBox(height: MediaQuery.of(context).size.width * 0.4),
+            SizedBox(height: MediaQuery.of(context).size.width * 0.45),
             Padding(
               padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: MediaQuery.of(context).size.width * 0.2),
               child: ElevatedButton(
                 onPressed: () async {
-                  var userType = 0;
-                  if(_formKey.currentState == null) return;
-                  if (_formKey.currentState!.validate()) {
+                  if(_formKey.currentState!.validate()) {
                     _formKey.currentState!.save();
-                    userType = await LoginApi.certifyLogin(publicAddress);
+                    Navigator.pushNamed(context, '/withdraw/confirmation', arguments: WithdrawConfirmationArguments(withdrawAmount));
                   }
-                  if(!mounted) return;
-                  if(userType != 0) {
-                    Store store = Store();
-                    store.setUserType(userType);
-                    Navigator.pushNamed(context, '/project/search', arguments: ProjectListArguments(publicAddress) );
-                    }
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFF89a8f9),
                   foregroundColor: const Color(0xFFFFFFFF),
                   ),
-                child: const Text('ログイン'),
+                child: const Text('お引出し'),
               ),
             ),
           ]
