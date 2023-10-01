@@ -43,12 +43,16 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                 ElevatedButton(
-                  onPressed: () => {},
+                  onPressed: () => {
+                    if (project != null) {
+                      Navigator.pushNamed(context, '/withdraw', arguments: DonateArguments(project!.id))
+                    }
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF89a8f9),
                     foregroundColor: const Color(0xFFFFFFFF),
                   ),
-                  child: Text('引き出し')
+                  child: Text('お引出し')
                 ),
                 ElevatedButton(
                   onPressed: () => {},
@@ -81,6 +85,7 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
             Card(
               elevation: 5,
               shadowColor: Colors.black,
+              color: Colors.white,
               shape: RoundedRectangleBorder( // 枠線を変更できる
                 borderRadius: BorderRadius.circular(10),
               ),
@@ -89,7 +94,7 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
                   Container(     
                     alignment: Alignment.center,     
                     child: const CircularProgressIndicator(       
-                      color: Colors.blue,     
+                      color: Color(0xFFCDF5FD)    
                     )   
                   )
                 ] :[

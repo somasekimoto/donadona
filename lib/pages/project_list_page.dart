@@ -50,7 +50,7 @@ class _ProjectListPageState extends State<ProjectListPage> {
         child: ListView(
           children: [
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24.0),
+              padding: const EdgeInsets.fromLTRB(24.0, 48.0, 24, 0),
               child: Row(
                 children: [
                   Flexible(
@@ -58,10 +58,13 @@ class _ProjectListPageState extends State<ProjectListPage> {
                       controller: _controller,
                       keyboardType: TextInputType.number,
                       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                         labelText: '勉強時間',
                         hintText: '6',
                         suffix: Text('時間'),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
                       ),
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       validator: (value) {
@@ -82,6 +85,10 @@ class _ProjectListPageState extends State<ProjectListPage> {
                     child: IconButton(
                       icon: const Icon(Icons.search),
                       iconSize: 36,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFF89a8f9),
+                        foregroundColor: const Color(0xFFFFFFFF),
+                        ),
                       onPressed: () async {
                         if(_formKey.currentState == null) return;
                         if (_formKey.currentState!.validate()) {

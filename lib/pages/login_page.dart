@@ -24,14 +24,17 @@ class LoginPage extends ConsumerWidget {
         key: _formKey,
         child: ListView(
           children: [
-            SizedBox(height: MediaQuery.of(context).size.width * 0.45),
+            SizedBox(height: MediaQuery.of(context).size.width * 0.5),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24.0),
               child: TextFormField(
                   controller: _controller,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     labelText: 'パブリックアドレス',
                     hintText: '0xXXXXXXXXXXXXXXXXXXXXXXXX',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(30),
+                    ),
                   ),
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   validator: (value) {
