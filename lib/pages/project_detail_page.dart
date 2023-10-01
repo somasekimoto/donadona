@@ -85,6 +85,7 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
             Card(
               elevation: 5,
               shadowColor: Colors.black,
+              color: Colors.white,
               shape: RoundedRectangleBorder( // 枠線を変更できる
                 borderRadius: BorderRadius.circular(10),
               ),
@@ -93,7 +94,7 @@ class _ProjectDetailPageState extends State<ProjectDetailPage> {
                   Container(     
                     alignment: Alignment.center,     
                     child: const CircularProgressIndicator(       
-                      color: Colors.blue,     
+                      color: Color(0xFFCDF5FD)    
                     )   
                   )
                 ] :[
