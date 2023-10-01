@@ -1,18 +1,14 @@
-import 'package:donadona/api/login_api.dart';
-import 'package:donadona/common/project_list_arguments.dart';
-import 'package:donadona/store.dart';
 import 'package:flutter/material.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({ super.key });
+class DonatePage extends StatefulWidget {
+  const DonatePage({ super.key });
   
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<DonatePage> createState() => _DonatePageState();
 }
-
-class _LoginPageState extends State<LoginPage> {
+class _DonatePageState extends State<DonatePage> {
   late TextEditingController _controller;
-  String publicAddress = '';
+  double donationAmount = 0;
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -40,19 +36,20 @@ class _LoginPageState extends State<LoginPage> {
               child: TextFormField(
                   controller: _controller,
                   decoration: const InputDecoration(
-                    labelText: 'パブリックアドレス',
-                    hintText: '0xXXXXXXXXXXXXXXXXXXXXXXXX',
+                    labelText: '支払額',
+                    hintText: '100000',
+                    suffix: Text('円'),
                   ),
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'パブリックアドレスを入力してください';
+                    if(value != null && double.tryParse(value) == null) {
+                      return '支払額には数値のみが有効です';
                     }
                     return null;
                   },
                   onSaved: (value) => {
                     if(value != null) {
-                      publicAddress = value
+                      donationAmount = double.parse(value)
                     }
                   },
                 ),
@@ -62,24 +59,13 @@ class _LoginPageState extends State<LoginPage> {
               padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: MediaQuery.of(context).size.width * 0.2),
               child: ElevatedButton(
                 onPressed: () async {
-                  var userType = 0;
-                  if(_formKey.currentState == null) return;
-                  if (_formKey.currentState!.validate()) {
-                    _formKey.currentState!.save();
-                    userType = await LoginApi.certifyLogin(publicAddress);
-                  }
-                  if(!mounted) return;
-                  if(userType != 0) {
-                    Store store = Store();
-                    store.setUserType(userType);
-                    Navigator.pushNamed(context, '/project/search', arguments: ProjectListArguments(publicAddress) );
-                    }
+
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFF89a8f9),
                   foregroundColor: const Color(0xFFFFFFFF),
                   ),
-                child: const Text('ログイン'),
+                child: const Text('寄付'),
               ),
             ),
           ]

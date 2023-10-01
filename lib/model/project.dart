@@ -12,4 +12,8 @@ class Project {
   static Project fromJson(Map<String, dynamic> json) {
     return Project(json['id'], json['payeeId'], json['projectName'], json['overview'], json['imagePath'], json['targetMoney'], json['studyTime']);
   }
+
+  static Project empty() {
+    return Project('', '', '', '', '', 0, 0);
+  }
 }
