@@ -4,6 +4,8 @@ import 'package:donadona/pages/login_page.dart';
 import 'package:donadona/pages/project_detail_page.dart';
 import 'package:donadona/pages/project_list_page.dart';
 import 'package:flutter/material.dart';
+import 'ethereum_screen.dart';
+
 
 class Routes {
   static Map<String, WidgetBuilder> getRoutes() {
@@ -14,6 +16,7 @@ class Routes {
       '/project/edit':(BuildContext context) => const DefaultLayout(title: 'プロジェクトを探す', body: Column()),
       '/donate':(BuildContext context) => const DefaultLayout(title: '寄付', body: DonatePage()),
       '/withDraw':(BuildContext context) => const DefaultLayout(title: '引き出し', body: Column()),
+      '/ethereum': (BuildContext context) => const EthereumHomeScreen()
     };
   }
 }

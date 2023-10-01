@@ -2,33 +2,23 @@ import 'package:donadona/api/login_api.dart';
 import 'package:donadona/common/project_list_arguments.dart';
 import 'package:donadona/store.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({ super.key });
-  
-  @override
-  State<LoginPage> createState() => _LoginPageState();
-}
+import '../common/ethereum_screen_state.dart';
 
-class _LoginPageState extends State<LoginPage> {
-  late TextEditingController _controller;
-  String publicAddress = '';
-  final _formKey = GlobalKey<FormState>();
+class LoginPage extends ConsumerWidget {
+  const LoginPage({Key? key}) : super(key: key);
 
   @override
-  void initState() {
-    super.initState();
-    _controller = TextEditingController(); 
-  }
+  Widget build(BuildContext context, WidgetRef ref) {
+    final balance = ref.watch(ethereumScreenStateProvider).balance;
+    final address = ref.watch(ethereumScreenStateProvider).address;
+    final walletConnectServiceInitialized = ref.watch(ethereumScreenStateProvider).walletConnectServiceInitialized;
+    
+    final _controller = TextEditingController();
+    final _formKey = GlobalKey<FormState>();
+    String publicAddress = '';
 
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
     return Center(
       child: Form(
         key: _formKey,
@@ -57,7 +47,27 @@ class _LoginPageState extends State<LoginPage> {
                   },
                 ),
               ),
+              Padding(
+              padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: MediaQuery.of(context).size.width * 0.2),
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.white,
+                  backgroundColor: Theme.of(context).primaryColor,
+                  minimumSize: const Size(200.0, 52.0),
+                  shape: const StadiumBorder(),
+                ),
+                onPressed: walletConnectServiceInitialized
+                    ? () {
+                        ref
+                            .read(ethereumScreenStateProvider.notifier)
+                            .openConnectWalletModal(context);
+                      }
+                    : null,
+                child: const Text('ウォレット接続'),
+              ),
+            ),
             SizedBox(height: MediaQuery.of(context).size.width * 0.45),
+            
             Padding(
               padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: MediaQuery.of(context).size.width * 0.2),
               child: ElevatedButton(
@@ -68,7 +78,7 @@ class _LoginPageState extends State<LoginPage> {
                     _formKey.currentState!.save();
                     userType = await LoginApi.certifyLogin(publicAddress);
                   }
-                  if(!mounted) return;
+                  // if(!mounted) return;
                   if(userType != 0) {
                     Store store = Store();
                     store.setUserType(userType);
@@ -82,9 +92,10 @@ class _LoginPageState extends State<LoginPage> {
                 child: const Text('ログイン'),
               ),
             ),
-          ]
+          ],
         ),
       ),
     );
-  } 
+  }
 }
+          
