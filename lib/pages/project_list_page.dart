@@ -50,7 +50,7 @@ class _ProjectListPageState extends State<ProjectListPage> {
         child: ListView(
           children: [
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24.0),
+              padding: const EdgeInsets.fromLTRB(24.0, 48.0, 24, 0),
               child: Row(
                 children: [
                   Flexible(
@@ -85,6 +85,10 @@ class _ProjectListPageState extends State<ProjectListPage> {
                     child: IconButton(
                       icon: const Icon(Icons.search),
                       iconSize: 36,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFF89a8f9),
+                        foregroundColor: const Color(0xFFFFFFFF),
+                        ),
                       onPressed: () async {
                         if(_formKey.currentState == null) return;
                         if (_formKey.currentState!.validate()) {

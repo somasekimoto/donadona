@@ -35,6 +35,7 @@ class _DonatePageState extends State<DonatePage> {
               padding: const EdgeInsets.symmetric(horizontal: 24.0),
               child: TextFormField(
                   controller: _controller,
+                  textAlign: TextAlign.end,
                   decoration: InputDecoration(
                     labelText: '寄付金額',
                     hintText: '100000',
@@ -43,7 +44,7 @@ class _DonatePageState extends State<DonatePage> {
                       borderRadius: BorderRadius.circular(30),
                     ),
                   ),
-                  autovalidateMode: AutovalidateMode.always,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return '寄付金額を入力してください';

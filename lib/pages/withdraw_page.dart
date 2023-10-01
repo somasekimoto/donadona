@@ -1,3 +1,4 @@
+import 'package:donadona/common/donate_arguments.dart';
 import 'package:donadona/common/withdraw_confirmationi_arguments.dart';
 import 'package:flutter/material.dart';
 
@@ -11,11 +12,18 @@ class _WithdrawPageState extends State<WithdrawPage> {
   late TextEditingController _controller;
   double withdrawAmount = 0;
   final _formKey = GlobalKey<FormState>();
+  late DonateArguments args;
 
   @override
   void initState() {
     super.initState();
     _controller = TextEditingController(); 
+
+        Future.delayed(Duration.zero, () async {
+      setState(() {
+        args = ModalRoute.of(context)?.settings.arguments as DonateArguments;
+      });
+    });
   }
 
   @override
@@ -36,6 +44,7 @@ class _WithdrawPageState extends State<WithdrawPage> {
               padding: const EdgeInsets.symmetric(horizontal: 24.0),
               child: TextFormField(
                   controller: _controller,
+                  textAlign: TextAlign.end,
                   decoration: InputDecoration(
                     labelText: 'お引出し額',
                     hintText: '100000',
@@ -44,7 +53,7 @@ class _WithdrawPageState extends State<WithdrawPage> {
                       borderRadius: BorderRadius.circular(30),
                     ),
                   ),
-                  autovalidateMode: AutovalidateMode.always,
+                  autovalidateMode: AutovalidateMode.onUserInteraction  ,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'お引出し額を入力してください';
@@ -68,7 +77,7 @@ class _WithdrawPageState extends State<WithdrawPage> {
                 onPressed: () async {
                   if(_formKey.currentState!.validate()) {
                     _formKey.currentState!.save();
-                    Navigator.pushNamed(context, '/withdraw/confirmation', arguments: WithdrawConfirmationArguments(withdrawAmount));
+                    Navigator.pushNamed(context, '/withdraw/confirmation', arguments: WithdrawConfirmationArguments(withdrawAmount, args.projectId));
                   }
                 },
                 style: ElevatedButton.styleFrom(

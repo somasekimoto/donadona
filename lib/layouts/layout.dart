@@ -9,8 +9,8 @@ class DefaultLayout extends StatelessWidget {
     Widget build(BuildContext context) {
       return Scaffold(
             appBar: AppBar(
-              backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-              title: Text(title),
+              backgroundColor: const Color(0xFFCDF5FD),
+              title: Text(title, style: Theme.of(context).textTheme.headlineMedium),
               leading: BackButton(
                 onPressed: () {
                   Navigator.of(context).pop();

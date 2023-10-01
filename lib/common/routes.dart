@@ -1,4 +1,3 @@
-import 'package:donadona/common/withdraw_confirmationi_arguments.dart';
 import 'package:donadona/layouts/layout.dart';
 import 'package:donadona/pages/donate_page.dart';
 import 'package:donadona/pages/login_page.dart';
