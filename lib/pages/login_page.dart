@@ -15,7 +15,7 @@ class LoginPage extends ConsumerWidget {
     final address = ref.watch(ethereumScreenStateProvider).address;
     final walletConnectServiceInitialized = ref.watch(ethereumScreenStateProvider).walletConnectServiceInitialized;
     
-    final _controller = TextEditingController();
+    final _controller = TextEditingController(text: '0xb2a4f7aae9bc0e5eaeec3f02af652c57cf9af0b4');
     final _formKey = GlobalKey<FormState>();
     String publicAddress = '';
 
